@@ -33,8 +33,19 @@ class TaskManager:
         with open(self.file_path, "w") as file:
             json.dump([task.to_dict() for task in self.tasks], file, indent=4)
 
-    def add_task(self, description, priority):
-        pass
+    def add_task(self, description, priority, created_at):
+        if priority < 1 or priority > 5:
+            raise ValueError("Приорітет має бути між 1 та 5")
+
+        try:
+            datetime.strptime(created_at, "%Y-%m-%d")
+        except ValueError:
+            raise ValueError("Дата має бути в форматі YYYY-MM-DD")
+
+        task_id = len(self.tasks) + 1
+        task = Task(task_id, description, created_at, priority)
+        self.tasks.append(task)
+        self.save_tasks()
 
     def delete_task(self, task_id):
         pass
