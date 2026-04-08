@@ -7,8 +7,15 @@ class Task:
         self.description = description
         self.created_at = created_at
         self.priority = priority
-    
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "description": self.description,
+            "created_at": self.created_at,
+            "priority": self.priority
+        }
+    
 class TaskManager:
     def __init__(self, file_path="tasks.txt"):
         self.file_path = file_path
@@ -16,6 +23,7 @@ class TaskManager:
     
     def load_tasks(self):
         pass
+
     def save_tasks(self):
         pass
 
