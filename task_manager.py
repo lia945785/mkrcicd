@@ -62,4 +62,9 @@ class TaskManager:
         return self.tasks
 
     def complete_task(self, task_id):
-        pass
+        for task in self.tasks:
+            if task.id == task_id:
+                self.tasks.remove(task)
+                self.save_tasks()
+                return
+        raise ValueError("Завдання з таким ID не знайдено")
