@@ -30,7 +30,8 @@ class TaskManager:
             return []
 
     def save_tasks(self):
-        pass
+        with open(self.file_path, "w") as file:
+            json.dump([task.to_dict() for task in self.tasks], file, indent=4)
 
     def add_task(self, description, priority):
         pass
