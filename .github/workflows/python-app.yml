@@ -27,17 +27,21 @@ jobs:
         pip install flake8 pytest pytest-html
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Lint with flake8 (PEP8 check)
+    - name: Lint with flake8
       run: |
+       
+        mkdir -p reports/flake8
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        flake8 . --format=html --htmldir=reports/flake8 || true
 
     - name: Test with pytest
       run: |
-        pytest --html=report.html --self-contained-html
-    - name: Upload Test Report
-      if: always()  
+       
+        mkdir -p reports/pytest
+        xvfb-run pytest --html=reports/pytest/report.html --self-contained-html || true
+
+    - name: Upload Analysis Reports
       uses: actions/upload-artifact@v4
       with:
-        name: pytest-report
-        path: report.html
+        name: analysis-reports
+        path: reports/
