@@ -52,7 +52,14 @@ class TaskManager:
         self.save_tasks()
 
     def list_tasks(self, sort_by="priority"):
-        pass
+        if sort_by == "priority":
+            return sorted(self.tasks, key=lambda x: x.priority)
+        elif sort_by == "date":
+            return sorted(
+                self.tasks,
+                key=lambda x: datetime.strptime(x.created_at, "%Y-%m-%d")
+            )
+        return self.tasks
 
     def complete_task(self, task_id):
         pass
