@@ -22,7 +22,12 @@ class TaskManager:
         self.tasks = self.load_tasks()
     
     def load_tasks(self):
-        pass
+        try:
+            with open(self.file_path, "r") as file:
+                tasks_data = json.load(file)
+                return [Task(**task) for task in tasks_data]
+        except FileNotFoundError:
+            return []
 
     def save_tasks(self):
         pass
